@@ -1,0 +1,84 @@
+	*{
+		font-style: verdana;
+	}
+	
+    .flex-container {
+		display: flex;
+        justify-content: center;
+	}
+	.flex-container > div {
+		color: white;
+        margin-left: auto;
+        margin-right: auto;
+        flex-shrink: 10;
+	}
+	a{
+		color: white;
+		padding: 10px;
+		font-weight: bold; 
+		text-shadow: 1px 1px 5px lightblue;
+	}
+    a:link{
+        text-decoration: none;
+    }
+    a:visited{
+    	color: white;
+        text-decoration: none;
+    }
+	header {
+		font-size: 2em;
+		padding-top: 1em;
+		text-align: center;
+	}
+    nav p {
+  		list-style-type: none;
+	}
+    body{
+    	background-image: url('../img/bioniccobot_flexible.jpg');
+	 	background-repeat: no-repeat;
+	  	background-attachment: fixed;
+  		background-size: cover;
+    }
+	
+	section{
+		font-style: verdana;
+		font-size: 200px;
+		padding-top: 1em;
+		padding-bottom: 0.5em;
+		color: rgba(0, 153, 255, 0.25); 
+		text-shadow: 0 0 100px rgba(255,255,255,.75);
+		text-align: center;
+		background:
+		url('../img/bluewhite.jpg') repeat-y;
+		-webkit-background-clip: text;
+		background-clip: text;
+		webkit-text-fill-color: transparent;
+		-webkit-animation: animate 25s linear infinite;
+		-webkit-transform: translate3d(0,0,0);
+		-webkit-backface-visibility: hidden;
+	}
+	@-webkit-keyframes animate {
+		0% { background-position: 0% 100%; }
+		50%{background-position: 100% 0%;}
+		100% { background-position:  00% 100%; }
+	}
+	footer {
+		text-align: center;
+		border: 3px double rgba(255,255,255,.75);
+		border-width: 4px 0;
+		padding: 1em 0em;
+		font-size: 15px;
+	}
+	article{
+		background-color: white;
+		padding: 3em 2em;
+		font-size: 2em;
+	}
+	h1{
+		text-transform: uppercase;
+		padding-left: 2em;
+	}
+	
+	
+
+	
