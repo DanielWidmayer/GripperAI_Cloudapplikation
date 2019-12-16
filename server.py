@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, render_template_string, jsonify
+import watershed
 
 app = Flask(__name__, template_folder="templates")
 
@@ -14,8 +15,14 @@ def gripper():
 def grippingpoints():
     return render_template("grippingpoints.html")
 
+@app.route("/grippingpoints/callWatershed", methods=["POST"])
+def callFunc():
+    image = request.form['image']
+    result = watershed.fullDetermination(image)
+    return result
+
 @app.route("/live")
 def live():
     return "This service is still under construction. Stay tuned!"
 if __name__ == "__main__":
-    app.run(debug=True, host = "0.0.0.0", port = 7070 )
+    app.run(debug=True, host = "localhost", port = 5000 )

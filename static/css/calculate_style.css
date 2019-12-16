@@ -1,9 +1,43 @@
-/*body{
-    background-image: url("../img/calculate.jpg");
-    filter: blur(1em);
-    -webkit-filter: blur(1em);
+body {
+    background-image: url('../img/calculate.jpg');
     background-repeat: no-repeat;
-	background-attachment: fixed;
+    background-attachment: fixed;
     background-size: cover;
-   
-}*/ 
+    color: white;
+    text-align: center;
+    font-style: verdana;
+}
+
+#video {
+    display: block;
+}
+h1 {
+    font-size: 4em;
+    text-shadow: 0 0 0.8em rgba(0, 162, 255, 0.97);
+}
+.screen {
+    color: white;
+    background-color: rgb(0, 153, 255);
+    border: solid;
+    text-align: center;
+    padding: 1em 1em;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 0.5em;
+    transition-duration: 0.5s;
+    margin: 1em 1em;
+}
+.screen:hover {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    background-color: rgb(0, 58, 134);
+    cursor: pointer;
+}
+.imgcont {
+    margin: auto auto;
+    border: solid;
+    color: white;
+    width: 640px;
+    height: 480px;
+    box-shadow: 0 0 7em rgb(0, 162, 255);
+}
