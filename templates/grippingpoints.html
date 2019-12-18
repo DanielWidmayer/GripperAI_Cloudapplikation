@@ -11,11 +11,11 @@
 
     <body>
         <h1>Capture an Object:</h1>
-        <video id="video" class="imgcont" autoplay>Video Stream not available</video>
+        <video id="video" class="imgcont" autoplay>Video Stream</video>
         <button id="snap" class="screen">Screenshot</button>
         <br />
-        <canvas id="Screenshot" class="imgcont"></canvas>
-        <canvas id="Watershed" class="imgcont"></canvas>
+        <canvas id="Screenshot" class="imgcont">Screenshot from Video Stream</canvas>
+        <canvas id="Watershed" class="imgcont">Watershed on Video Stream</canvas>
         <script src="{{url_for('static', filename='js/webcam.js')}}"></script>
     </body>
 </html>

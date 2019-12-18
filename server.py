@@ -21,6 +21,10 @@ def callFunc():
     result = watershed.fullDetermination(image)
     return result
 
+@app.route("/about")
+def about():
+    return render_template("opencvjstest.html")
+
 @app.route("/live")
 def live():
     return "This service is still under construction. Stay tuned!"

@@ -3,6 +3,7 @@ import numpy as np
 import cv2 as cv
 import base64 
 import sys
+import matplotlib.pyplot as plt
 
 def data_uri_to_cv2_img(uri):
     encoded_data = uri.split(',')[1]
@@ -54,7 +55,7 @@ def fullDetermination(input):
     # bring the right x and y values together
     x=xval.tolist()+xval2.tolist()
     y=yval.tolist()+yval2.tolist()
-    coor = zip(x,y)
+    coor = list(zip(x,y))
     # draw outer points into the image
     for c in coor:
         cv.circle(img, (c[0],c[1]), 5, (255,105,180), 5)
@@ -77,7 +78,7 @@ def fullDetermination(input):
         else:
             return False
 
-    L1 = line(coor[1], coor[3])
+    L1 = line((coor[1]), coor[3])
     L2 = line(coor[0], coor[2])
 
     R = intersection(L1, L2)
@@ -85,9 +86,13 @@ def fullDetermination(input):
         R = coor[0]
     # draw main gripping point
     cv.circle(img, R, 10, (255,255,0), 10)
+
     ignore, buffer = cv.imencode('.png', img)
+    
     output = base64.b64encode(buffer)
-    return output
+
+    plt.savefig("./bild.png")
+    return output   
 
 # for test purposes
 # image = cv.imread('static/img/Kartoffel.jpg')
