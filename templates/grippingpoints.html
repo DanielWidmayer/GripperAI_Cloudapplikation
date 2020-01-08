@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" type="text/css" href="../static/css/calculate_style.css">
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="../static/css/calculate_style.css" />
+        <title>Camera</title>
+        <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
     </head>
+
     <body>
-    <video id="video" width="640" height="480" autoplay></video>
-    <button id="snap">Snap Photo</button>
-    <canvas id="canvas" width="640" height="480"></canvas>
-    <script src="../static/js/webcamcapture.js"></script>
+        <h1>Capture an Object:</h1>
+        <video id="video" class="imgcont" autoplay>Video Stream</video>
+        <button id="snap" class="screen">Screenshot</button>
+        <br />
+        <canvas id="Screenshot" class="imgcont">Screenshot from Video Stream</canvas>
+        <canvas id="Watershed" class="imgcont">Watershed on Video Stream</canvas>
+        <script src="{{url_for('static', filename='js/webcam.js')}}"></script>
+    </body>
 </html>
