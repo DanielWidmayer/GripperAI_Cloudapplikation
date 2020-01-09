@@ -1,1 +1,1 @@
-web: gunicorn flaskservergripper:server
+web: gunicorn server:flaskservergripper
