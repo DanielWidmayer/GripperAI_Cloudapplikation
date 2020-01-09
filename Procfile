@@ -1,1 +1,1 @@
-web: gunicorn server:flaskservergripper
+web: gunicorn server:app
