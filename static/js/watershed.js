@@ -75,14 +75,14 @@ function openCvReady() {
                 cv.subtract(surebg, surefg, unknown);
                 cv.connectedComponents(surefg, markers);
 
-                for (let i = 0; i < markers.rows; i++) {
+                /*for (let i = 0; i < markers.rows; i++) {
                     for (let j = 0; j < markers.cols; j++) {
                         markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
                         if (unknown.ucharPtr(i, j)[0] == 255) {
                             markers.intPtr(i, j)[0] = 0;
                         }
                     }
-                }
+                }*/
                 //cv.watershed()
                 if (video.srcObject != null) {
                     cv.imshow('canvasDisplay', markers);
