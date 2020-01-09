@@ -3,4 +3,3 @@ gunicorn
 django-heroku
 Jinja2
 flask
-watershed

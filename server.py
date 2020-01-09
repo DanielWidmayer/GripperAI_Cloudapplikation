@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, render_template_string, jsonify
-import watershed
+# import watershed
 
 app = Flask(__name__, template_folder="templates")
 
@@ -15,11 +15,11 @@ def gripper():
 def grippingpoints():
     return render_template("grippingpoints.html")
 
-@app.route("/grippingpoints/callWatershed", methods=["POST"])
-def callFunc():
-    image = request.form['image']
-    result = watershed.fullDetermination(image)
-    return result
+# @app.route("/grippingpoints/callWatershed", methods=["POST"])
+# def callFunc():
+#     image = request.form['image']
+#     result = watershed.fullDetermination(image)
+#     return result
 
 @app.route("/about")
 def about():
