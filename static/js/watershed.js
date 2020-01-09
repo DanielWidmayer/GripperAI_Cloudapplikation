@@ -73,7 +73,7 @@ function openCvReady() {
                 cv.threshold(dest, surefg, 0.3, 255, cv.THRESH_BINARY);
                 surefg.convertTo(surefg, cv.CV_8U, 1, 0);
                 cv.subtract(surebg, surefg, unknown);
-                cv.connectedComponents(surefg, markers);
+                //cv.connectedComponents(surefg, markers);
 
                 /*for (let i = 0; i < markers.rows; i++) {
                     for (let j = 0; j < markers.cols; j++) {
@@ -85,7 +85,7 @@ function openCvReady() {
                 }*/
                 //cv.watershed()
                 if (video.srcObject != null) {
-                    cv.imshow('canvasDisplay', markers);
+                    cv.imshow('canvasDisplay', dest);
                     cv.imshow('canvasStep', surebg);
                     cv.imshow('canvasStep2', surefg);
 
@@ -93,7 +93,7 @@ function openCvReady() {
                 }
                 // schedule next one.
                 let delay = 1000 / FPS - (Date.now() - begin);
-                setTimeout(processVideo, delay+500);
+                setTimeout(processVideo, delay);
             }
             processVideo();
         }
