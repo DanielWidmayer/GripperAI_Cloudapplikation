@@ -3,7 +3,7 @@ import watershed
 
 app = Flask(__name__, template_folder="templates")
 
-@app.route("/")
+@app.route("/", methods = ["GET"])
 def home():
     return render_template("home.html")
 
