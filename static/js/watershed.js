@@ -73,19 +73,18 @@ function openCvReady() {
                 cv.threshold(dest, surefg, 0.3, 255, cv.THRESH_BINARY);
                 surefg.convertTo(surefg, cv.CV_8U, 1, 0);
                 cv.subtract(surebg, surefg, unknown);
-                //cv.connectedComponents(surefg, markers);
-
-                /*for (let i = 0; i < markers.rows; i++) {
+                cv.connectedComponents(surefg, markers);
+                for (let i = 0; i < markers.rows; i++) {
                     for (let j = 0; j < markers.cols; j++) {
                         markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
                         if (unknown.ucharPtr(i, j)[0] == 255) {
                             markers.intPtr(i, j)[0] = 0;
                         }
                     }
-                }*/
+                }
                 //cv.watershed()
                 if (video.srcObject != null) {
-                    cv.imshow('canvasDisplay', dest);
+                    cv.imshow('canvasDisplay', markers);
                     cv.imshow('canvasStep', surebg);
                     cv.imshow('canvasStep2', surefg);
 
