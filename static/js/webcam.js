@@ -3,6 +3,7 @@ const constraints = {
     video: true
 };
 
+
 function startup() {
     navigator.mediaDevices
         .getUserMedia(constraints)
