@@ -21,7 +21,7 @@ function getPoints() {
     var img = document.createElement('img');
     img.src = canvas.toDataURL();
     //console.log(img.src);
-    $.post('http://localhost:5000/grippingpoints/callWatershed', { image: img.src }, function(result) {
+    $.post('http://festo-test.de:5000/grippingpoints/callWatershed', { image: img.src }, function(result) {
         //console.log('wurde ausgeführt');
         result = 'data:image/png;base64,' + result;
         var newCanvas = document.getElementById('Watershed');

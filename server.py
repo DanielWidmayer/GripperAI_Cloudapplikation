@@ -5,7 +5,7 @@ app = Flask(__name__, template_folder="templates")
 
 from flask_cors import CORS
 
-cors = CORS(app)
+CORS(app)
 
 @app.route("/", methods = ["GET"])
 def home():
