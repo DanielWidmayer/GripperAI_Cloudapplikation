@@ -38,19 +38,22 @@ function openCvReady() {
         }
         function fullProcessing() {
             const iterations = 3; //iteration defines number of repeats for morphological operations
-
+            
             let imgData = context.getImageData(0, 0, video.width, video.height);
             let src = cv.matFromImageData(imgData);
+
             let dst = cv.matFromImageData(imgData);
             let dest = cv.matFromImageData(imgData);
             let surebg = cv.matFromImageData(imgData);
             let surefg = cv.matFromImageData(imgData);
-            let sureFg = cv.matFromImageData(imgData);
             let unknown = cv.matFromImageData(imgData);
             let markers = cv.matFromImageData(imgData);
 
             let kernel = new cv.Mat();
+
             function processVideo() {
+                
+
                 // get context / video
                 let begin = Date.now();
                 context.drawImage(video, 0, 0, video.width, video.height);
@@ -74,20 +77,29 @@ function openCvReady() {
                 surefg.convertTo(surefg, cv.CV_8U, 1, 0);
                 cv.subtract(surebg, surefg, unknown);
                 cv.connectedComponents(surefg, markers);
-                for (let i = 0; i < markers.rows; i++) {
-                    for (let j = 0; j < markers.cols; j++) {
-                        markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
-                        if (unknown.ucharPtr(i, j)[0] == 255) {
-                            markers.intPtr(i, j)[0] = 0;
-                        }
-                    }
-                }
-                //cv.watershed()
+                // for (let i = 0; i < markers.rows; i++) {
+                //     for (let j = 0; j < markers.cols; j++) {
+                //         markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
+                //         if (unknown.ucharPtr(i, j)[0] == 255) {
+                //             markers.intPtr(i, j)[0] = 0;
+                //         }
+                //     }
+                // }
+                // cv.cvtColor(src, src, cv.COLOR_RGBA2RGB, 0);
+                // cv.watershed(src, markers);
+                // for (let i = 1; i < markers.rows - 1; i++) {
+                //     for (let j = 1; j < markers.cols - 1; j++) {
+                //         if (markers.intPtr(i, j)[0] == -1) {
+                //             src.ucharPtr(i, j)[0] = 255; // R
+                //             src.ucharPtr(i, j)[1] = 0; // G
+                //             src.ucharPtr(i, j)[2] = 0; // B
+                //         }
+                //     }
+                // }
                 if (video.srcObject != null) {
-                    cv.imshow('canvasDisplay', markers);
+                    cv.imshow('canvasDisplay', surefg);
                     cv.imshow('canvasStep', surebg);
                     cv.imshow('canvasStep2', surefg);
-
                     cv.imshow('canvasStep3', unknown);
                 }
                 // schedule next one.

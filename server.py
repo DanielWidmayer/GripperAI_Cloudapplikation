@@ -25,6 +25,10 @@ def callFunc():
 def about():
     return render_template("opencvjstest.html")
 
+@app.route("/application")
+def application():
+    return render_template("index.htm")
+
 @app.route("/live")
 def live():
     return "This service is still under construction. Stay tuned!"
