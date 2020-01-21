@@ -3,3 +3,8 @@ gunicorn
 django-heroku
 Jinja2
 flask
+numpy
+cv2
+base64
+sys
+matplotlib.pyplot
