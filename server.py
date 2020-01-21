@@ -38,4 +38,4 @@ def live():
     return "This service is still under construction. Stay tuned!"
 
 if __name__ == "__main__":
-    app.run( debug=False, host = "localhost", port = 5000 )
+    app.run(  port = 5000 ) #debug=False, host = "localhost",
