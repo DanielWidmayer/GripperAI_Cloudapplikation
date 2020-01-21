@@ -3,7 +3,6 @@ import numpy as np
 import opencv as cv
 import base64 
 import sys
-import matplotlib as plt
 
 def data_uri_to_cv2_img(uri):
     encoded_data = uri.split(',')[1]
@@ -91,7 +90,6 @@ def fullDetermination(input):
     
     output = base64.b64encode(buffer)
 
-    plt.savefig("./bild.png")
     return output   
 
 # for test purposes
