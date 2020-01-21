@@ -4,7 +4,7 @@ from flask_cors import CORS
 
 app = Flask(__name__, template_folder="templates")
 
-cors = CORS(app, resources={r"/*": {"origins": "localhost:5000"}})
+cors = CORS(app, resources={r"/*": {"origins": "http://localhost:5000"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/", methods = ["GET"])
