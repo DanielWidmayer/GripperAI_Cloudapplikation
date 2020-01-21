@@ -4,6 +4,12 @@ import opencv as cv
 import base64 
 import sys
 
+from flask_cors import CORS
+
+
+cors = CORS(app, resources={r"/grippingpoints/*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 def data_uri_to_cv2_img(uri):
     encoded_data = uri.split(',')[1]
     nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
