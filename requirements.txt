@@ -4,3 +4,4 @@ django-heroku
 Jinja2
 flask
 numpy
+flask-cors

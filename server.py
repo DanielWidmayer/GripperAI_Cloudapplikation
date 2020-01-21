@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, render_template_string, jsonify
 import watershed
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder="templates")
+
+cors = CORS(app, resources={r"/*": {"origins": "localhost:5000"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/", methods = ["GET"])
 def home():
@@ -32,5 +36,6 @@ def application():
 @app.route("/live")
 def live():
     return "This service is still under construction. Stay tuned!"
+
 if __name__ == "__main__":
-    app.run( port = 5000 ) #debug=False, host = "127.0.0.1",
+    app.run( debug=False, host = "localhost", port = 5000 )
