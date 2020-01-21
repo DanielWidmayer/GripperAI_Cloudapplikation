@@ -3,7 +3,11 @@ import watershed
 
 app = Flask(__name__, template_folder="templates")
 
+from flask_cors import CORS
 
+
+cors = CORS(flaskservergripper, resources={r"/grippingpoints/*": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/", methods = ["GET"])
 def home():
