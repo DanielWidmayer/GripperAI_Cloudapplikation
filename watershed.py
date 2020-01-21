@@ -1,6 +1,6 @@
 from __future__ import division 
 import numpy as np
-import cv2 as cv
+import opencv as cv
 import base64 
 import sys
 import matplotlib.pyplot as plt
