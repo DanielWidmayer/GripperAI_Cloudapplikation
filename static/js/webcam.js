@@ -21,7 +21,7 @@ function getPoints() {
     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
     var img = document.createElement('img');
     img.src = canvas.toDataURL();
-    //console.log(img.src);
+    console.log('wurde ausgeführt');
     $.post('http://flaskservergripper.herokuapp.com/grippingpoints/callWatershed', { image: img.src }, function (result) {
         //console.log('wurde ausgeführt');
         result = 'data:image/png;base64,' + result;
