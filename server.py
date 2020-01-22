@@ -3,9 +3,7 @@ import watershed
 
 app = Flask(__name__, template_folder="templates")
 
-from flask_cors import CORS
 
-CORS(app)
 
 @app.route("/", methods = ["GET"])
 def home():
@@ -38,4 +36,4 @@ def live():
     return "This service is still under construction. Stay tuned!"
 
 if __name__ == "__main__":
-    app.run(  port = 5000 ) #debug=False, host = "localhost",
+    app.run(  debug=False, host = "localhost", port = 5000 ) 

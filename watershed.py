@@ -1,9 +1,8 @@
 from __future__ import division 
 import numpy as np
-import opencv as cv
+import cv2 as cv
 import base64 
 import sys
-
 
 
 def data_uri_to_cv2_img(uri):

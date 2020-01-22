@@ -22,13 +22,13 @@ function getPoints() {
     var img = document.createElement('img');
     img.src = canvas.toDataURL();
     //console.log(img.src);
-    $.post('http://festo-test.de:5000/grippingpoints/callWatershed', { image: img.src }, function(result) {
+    $.post('http://flaskservergripper.herokuapp.com:5000/grippingpoints/callWatershed', { image: img.src }, function (result) {
         //console.log('wurde ausgeführt');
         result = 'data:image/png;base64,' + result;
         var newCanvas = document.getElementById('Watershed');
         var newContext = newCanvas.getContext('2d');
         var newImg = new Image();
-        newImg.onload = function() {
+        newImg.onload = function () {
             newContext.drawImage(newImg, 0, 0, canvas.height / 1.63, canvas.width / 4.3);
         };
         newImg.src = result;
@@ -44,6 +44,6 @@ window.addEventListener('load', startup, false);
 
 //document.getElementById('snap').addEventListener('click', doFunction, false);
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#snap').on('click', getPoints);
 });
