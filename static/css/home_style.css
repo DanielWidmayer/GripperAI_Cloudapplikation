@@ -11,12 +11,21 @@
     margin-left: auto;
     margin-right: auto;
     flex-shrink: 10;
+    padding: 0.2em;
 }
+
+@media (max-width: 750px) {
+    div {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+}
+
 a {
     color: white;
-    padding: 10px;
+    padding: 0em;
     font-weight: bold;
-    text-shadow: 1px 1px 5px lightblue;
+    text-shadow: 0.1em 0.1em 0.5em lightblue;
 }
 a:link {
     text-decoration: none;
@@ -42,7 +51,7 @@ body {
 
 section {
     font-style: verdana;
-    font-size: 200px;
+    font-size: 12vw;
     padding-top: 1em;
     padding-bottom: 0.5em;
     color: rgba(0, 153, 255, 0.25);
@@ -72,14 +81,19 @@ footer {
     border: 3px double rgba(255, 255, 255, 0.75);
     border-width: 4px 0;
     padding: 1em 0em;
-    font-size: 15px;
+    font-size: 1em;
 }
 article {
     background-color: white;
     padding: 3em 2em;
-    font-size: 2em;
+    font-size: 2rem;
 }
 h1 {
     text-transform: uppercase;
     padding-left: 2em;
+}
+@media (max-width: 450px) {
+    h1 {
+        padding-left: 0;
+    }
 }
