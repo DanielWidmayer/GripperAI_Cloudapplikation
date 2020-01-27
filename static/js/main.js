@@ -210,13 +210,15 @@ function takeSnapshot() {
 
     var canvasImage = document.getElementById('canvasImage');
     var canvasImageContext = canvasImage.getContext('2d');
+
+    canvasImage.style.display = 'block';
+
     var width = video.videoWidth;
     var height = video.videoHeight;
     canvasImage.width = width;
     canvasImage.height = height;
     canvasImageContext.drawImage(video, 0, 0, width, height);
     let imgData = canvasImageContext.getImageData(0, 0, width, height);
-    canvasImage.style.display = 'block';
     fullProcessing(imgData);
     //var time1 = performance.now();
     //console.log('Dauer draw: ' + (time1 - start) + ' ms.');
@@ -226,6 +228,7 @@ function takeSnapshot() {
     var time3 = performance.now();
     console.log('Dauer Processing: ' + (time3 - start) + ' ms.');
     closeCanvasButton.style.display = 'block';
+
     closeCanvasButton.addEventListener('click', function() {
         canvasImageContext.clearRect(0, 0, canvasImage.width, canvasImage.height);
         closeCanvasButton.style.display = 'none';
@@ -371,8 +374,8 @@ function createClickFeedbackUI() {
     return function() {
         if (overlayVisibility == false) {
             sndClick.play();
-            overlayVisibility = true;
-            overlay.style.display = 'block';
+            overlayVisibility = false;
+            overlay.style.display = 'none';
             setTimeout(setFalseAgain, timeOut);
         }
     };
