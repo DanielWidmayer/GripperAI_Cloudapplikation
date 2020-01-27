@@ -14,13 +14,6 @@
     padding: 0.2em;
 }
 
-@media (max-width: 750px) {
-    div {
-        -webkit-flex-direction: column;
-        flex-direction: column;
-    }
-}
-
 a {
     color: white;
     padding: 0em;
@@ -51,7 +44,7 @@ body {
 
 section {
     font-style: verdana;
-    font-size: 12vw;
+    font-size: 14vw;
     padding-top: 1em;
     padding-bottom: 0.5em;
     color: rgba(0, 153, 255, 0.25);
@@ -86,12 +79,23 @@ footer {
 article {
     background-color: white;
     padding: 3em 2em;
-    font-size: 2rem;
+    font-size: 1.5em;
 }
 h1 {
     text-transform: uppercase;
     padding-left: 2em;
 }
+
+@media (max-width: 750px) {
+    div {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+    }
+    article {
+        font-size: 0.8em;
+    }
+}
+
 @media (max-width: 450px) {
     h1 {
         padding-left: 0;
