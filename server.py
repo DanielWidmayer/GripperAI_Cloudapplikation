@@ -5,7 +5,7 @@ from flask_talisman import Talisman
 
 app = Flask(__name__, template_folder="templates")
 socketio = SocketIO(app)
-Talisman(app) #,content_security_policy=None
+Talisman(app, content_security_policy=None)
 
 ### HOME / INDEX SITE ###
 @app.route("/", methods = ["GET"])
