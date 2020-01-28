@@ -4,3 +4,5 @@ django-heroku
 Jinja2
 flask
 numpy
+flask_socketio
+flask_talisman
