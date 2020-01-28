@@ -253,7 +253,6 @@ function takeSnapshot() {
 }
 
 function fullProcessing(imgData) {
-    overlay.style.display = 'none';
     var start = performance.now();
 
     const iterations = 5; //iteration defines number of repeats for morphological operations
