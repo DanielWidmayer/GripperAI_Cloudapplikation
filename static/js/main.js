@@ -360,7 +360,7 @@ function createClickFeedbackUI() {
     var overlay = document.getElementById('video_overlay'); //.style.display;
 
     // sound feedback
-    var sndClick = new Howl({ src: ['snd/click.mp3'] });
+    var sndClick = new Howl({ src: ['../../snd/click.mp3'] });
 
     var overlayVisibility = false;
     var timeOut = 80;
