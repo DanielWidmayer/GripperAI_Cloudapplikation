@@ -211,19 +211,35 @@ function takeSnapshot() {
     var canvasImage = document.getElementById('canvasImage');
     var canvasImageContext = canvasImage.getContext('2d');
 
-    canvasImage.style.display = 'block';
-
     var width = video.videoWidth;
     var height = video.videoHeight;
+
+    canvasImage.style.display = 'block';
     canvasImage.width = width;
     canvasImage.height = height;
+    
     canvasImageContext.drawImage(video, 0, 0, width, height);
+    
     let imgData = canvasImageContext.getImageData(0, 0, width, height);
-    fullProcessing(imgData);
-    //var time1 = performance.now();
-    //console.log('Dauer draw: ' + (time1 - start) + ' ms.');
-    //var time2 = performance.now();
-    //console.log('Dauer getData: ' + (time2 - time1) + ' ms.');
+    //fullProcessing(imgData);
+
+    
+    //canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    var img = document.createElement('img');
+    img.src = canvasImage.toDataURL();
+    console.log('wurde ausgeführt');
+    $.post('/grippingpoints/callWatershed', { image: img.src }, function (result) {
+
+        console.log('wurde ausgeführt');
+        result = 'data:image/png;base64,' + result;
+        
+        var newImg = new Image();
+        newImg.onload = function () {
+            canvasImage.getContext('2d').drawImage(newImg, 0, 0, width, height);
+        };
+        newImg.src = result;
+    });
+
     // polyfil if needed https://github.com/blueimp/JavaScript-Canvas-to-Blob
     var time3 = performance.now();
     console.log('Dauer Processing: ' + (time3 - start) + ' ms.');
@@ -252,103 +268,6 @@ function takeSnapshot() {
     console.log('Dauer Rest: ' + (time4 - time3) + ' ms.');
 }
 
-function fullProcessing(imgData) {
-    var start = performance.now();
-
-    const iterations = 5; //iteration defines number of repeats for morphological operations
-
-    let src = cv.matFromImageData(imgData);
-    let dst = cv.matFromImageData(imgData);
-    let dest = cv.matFromImageData(imgData);
-    let surebg = cv.matFromImageData(imgData);
-    let surefg = cv.matFromImageData(imgData);
-    let unknown = cv.matFromImageData(imgData);
-    let markers = new cv.Mat();
-    console.log('Reihen: ' + src.rows + '  Zeilen: ' + src.cols);
-    let newSize = new cv.Size(Math.round(src.cols / 2), Math.round(src.rows / 2));
-    // get context / video
-    cv.resize(src, src, newSize);
-    console.log('Reihen: ' + src.rows + '  Zeilen: ' + src.cols);
-    var tim1 = performance.now();
-    console.log('Dauer Vars: ' + (tim1 - start) + ' ms.');
-    let kernel = new cv.Mat();
-    // calculate treshold
-    cv.cvtColor(src, dst, cv.COLOR_RGBA2GRAY);
-    let otsu = cv.THRESH_OTSU + cv.THRESH_BINARY_INV;
-    cv.threshold(dst, dest, 0, 255, otsu);
-    // do morphological opening & closing
-    let ksize = new cv.Size(3, 3);
-    kernel = cv.getStructuringElement(cv.MORPH_RECT, ksize);
-    let anchor = new cv.Point(-1, -1);
-    cv.morphologyEx(dest, dst, cv.MORPH_CLOSE, kernel, anchor, iterations);
-    cv.morphologyEx(dst, dest, cv.MORPH_OPEN, kernel, anchor, iterations);
-    // get sure background
-    cv.dilate(dest, surebg, kernel, anchor, iterations);
-    cv.distanceTransform(dst, dest, cv.DIST_L2, 5);
-    cv.normalize(dest, dest, 1, 0, cv.NORM_INF);
-    // get sure foreground
-    cv.threshold(dest, surefg, 0.3, 255, cv.THRESH_BINARY);
-    surefg.convertTo(surefg, cv.CV_8U, 1, 0);
-    cv.subtract(surebg, surefg, unknown);
-
-    cv.connectedComponents(surefg, markers);
-    var tim2 = performance.now();
-    console.log('Dauer Preprocessing: ' + (tim2 - tim1) + ' ms.');
-    console.log('Reihen: ' + markers.rows + '  Zeilen: ' + markers.cols + '  Loops: ' + markers.rows * markers.cols);
-    for (let i = 0, k = markers.rows; i < k; i++) {
-        for (let j = 0, l = markers.cols; j < l; j++) {
-            markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
-            if (unknown.ucharPtr(i, j)[0] == 255) {
-                markers.intPtr(i, j)[0] = 0;
-            }
-        }
-    }
-    var tim3 = performance.now();
-    console.log('Dauer marker: ' + (tim3 - tim2) + ' ms.');
-
-    cv.cvtColor(src, src, cv.COLOR_RGBA2RGB, 0);
-    var tim31 = performance.now();
-
-    console.log('Dauer cvt: ' + (tim31 - tim3) + ' ms.');
-
-    cv.watershed(src, markers);
-    var tim32 = performance.now();
-    console.log('Dauer watershed: ' + (tim32 - tim31) + ' ms.');
-    // draw barriers
-    for (let i = 1; i < markers.rows - 1; i++) {
-        for (let j = 1; j < markers.cols - 1; j++) {
-            if (markers.intPtr(i, j)[0] == -1) {
-                // let xMax, xMin, yMax, yMin;
-                // if (xMax < i) {
-                //     xMax[0] = i;
-                //     xMax[1] = j;
-                // }
-                // else if (xMin > i) {
-                //     xMin[0] = i;
-                //     xMin[1] = j;
-                // }
-                // if (yMax < j) {
-                //     yMax[0] = i;
-                //     yMax[0] = j;
-                // }
-                // else if (yMin > j) {
-                //     yMin[0] = i;
-                //     yMin[0] = j;
-                // }
-                src.ucharPtr(i, j)[0] = 255; // R
-                src.ucharPtr(i, j)[1] = 0; // G
-                src.ucharPtr(i, j)[2] = 0; // B
-            }
-        }
-    }
-    // math.intersect(xMin, xMax, yMin, yMax);
-    var tim4 = performance.now();
-    console.log('Dauer barriers: ' + (tim4 - tim3) + ' ms.');
-    cv.imshow('canvasImage', src);
-    //return markers;
-    var tim5 = performance.now();
-    console.log('Dauer show: ' + (tim5 - tim4) + ' ms.');
-}
 // https://hackernoon.com/how-to-use-javascript-closures-with-confidence-85cd1f841a6b
 // closure; store this in a variable and call the variable as function
 // eg. var takeSnapshotUI = createClickFeedbackUI();
