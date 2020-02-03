@@ -8,16 +8,16 @@ import base64
 import sys
 
 
-def data_uri_to_cv2_img(uri):
-    encoded_data = uri.split(',')[1]
-    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-    img = cv.cv.imdecode(nparr, cv.IMREAD_COLOR)
-    return img
+# def data_uri_to_cv2_img(uri):
+    
+#     return img
 
 
 def fullDetermination(input):
-
-    img = data_uri_to_cv2_img(input)
+    encoded_data = input.split(',')[1]
+    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    #img = data_uri_to_cv2_img(input)
     # img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
     # calculate otsu Threshold to get binary picture
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
