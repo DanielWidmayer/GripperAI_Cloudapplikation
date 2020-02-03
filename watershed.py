@@ -46,7 +46,7 @@ def fullDetermination(input):
     markers[unknown == 255] = 0
     # apply watershed
     markers = cv.watershed(img, markers)
-    img[markers == -1] = [255, 0, 0]
+    #img[markers == -1] = [255, 0, 0]
     # get array of picture
 
     markers[markers != -1] = 0
@@ -57,7 +57,7 @@ def fullDetermination(input):
     xval = coord[1][np.argmin(coord, 1)]
     yval2 = coord[0][np.argmax(coord, 1)]
     xval2 = coord[1][np.argmax(coord, 1)]
-    # bring the right x and y values together
+    # bring the corresponding x and y values together
     x = xval.tolist()+xval2.tolist()
     y = yval.tolist()+yval2.tolist()
     coor = list(zip(x, y))
