@@ -11,7 +11,7 @@ import sys
 def data_uri_to_cv2_img(uri):
     encoded_data = uri.split(',')[1]
     nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    img = cv.cv.imdecode(nparr, cv.IMREAD_COLOR)
     return img
 
 
