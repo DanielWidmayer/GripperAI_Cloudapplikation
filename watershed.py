@@ -1,7 +1,7 @@
 from __future__ import division
 import numpy as np
 try:
-import cv2 as cv
+    import cv2 as cv
 except:
     import opencv as cv
 import base64
