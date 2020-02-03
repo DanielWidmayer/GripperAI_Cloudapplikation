@@ -6,3 +6,4 @@ flask
 numpy
 flask_socketio
 flask_talisman
+opencv-python
