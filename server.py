@@ -28,6 +28,11 @@ def callFunc():
     result = watershed.fullDetermination(image)
     return result
 
+### Presentation Case ###
+@app.route("/ajaxmobile")
+def ajaxmobile():
+    return render_template("ajaxmobile.html")
+
 ### SECOND TRY - LIVE BUT JS TOO SLOW ###
 @app.route("/about")
 def about():

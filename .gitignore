@@ -1,7 +1,7 @@
 /__pycache__
-/venv
+venv/
 /emsdk
 watershed.pyc
 /old_stuff
 image.png
-
+.vscode/
