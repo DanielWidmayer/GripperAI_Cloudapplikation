@@ -3,7 +3,7 @@ import numpy as np
 try:
     import cv2 as cv
 except:
-    import opencv as cv
+    import opencv2 as cv
 import base64
 import sys
 
