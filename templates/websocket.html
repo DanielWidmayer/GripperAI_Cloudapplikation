@@ -2,14 +2,34 @@
   <html lang="en">
   <head>
     <title>Flask_Chat_App</title>
+    <link rel="icon" href="../static/img/favicon.ico" type="image/x-icon">
   </head>
   <body>
-
-   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-<script type="text/javascript" charset="utf-8">
+    <img src="../static/img/Kartoffel.jpg" id="imgId">
+    <canvas id="imgCanvas"></canvas>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+    var canvas = document.getElementById('imgCanvas');
+    var canvasContext = canvas.getContext('2d');
+    var img = document.getElementById('imgId');
+    var height = canvas.height;
+    var width = canvas.width;
+    canvasContext.drawImage(img,width,height);
+    var buf = canvasContext.getImageData(0, 0, width, height);
+    console.log(typeof(buf));
     var socket = io();
     socket.on('connect', function() {
-        socket.emit('my event', {data: 'I\'m connected!'});
+      console.log(buf);
+      socket.emit('my event',  buf);
+      console.log('I\'m connected');
+    });
+    socket.on('message', function(received){
+      socket.emit('message', {data: 'Test!'});
+      console.log(received,'message client');
+    }); 
+    socket.on('my response', function(received){
+      socket.emit('my event', {'image_data': buf});
+      console.log(received,'endless?');
     });
 </script>
 
