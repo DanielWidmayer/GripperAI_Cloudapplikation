@@ -3,7 +3,7 @@ import numpy as np
 try:
     import cv2 as cv
 except:
-    import opencv2 as cv
+    import opencv as cv
 import base64
 import sys
 
@@ -14,11 +14,11 @@ import sys
 
 
 def fullDetermination(input):
-    encoded_data = input.split(',')[1]
-    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    # encoded_data = input.split(',')[1]
+    # nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    # img = cv.imdecode(nparr, cv.IMREAD_COLOR)
     #img = data_uri_to_cv2_img(input)
-    # img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
+    img = cv.cvtColor(input, cv.COLOR_RGB2BGR)
     # calculate otsu Threshold to get binary picture
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     otsu = cv.THRESH_OTSU+cv.THRESH_BINARY_INV
@@ -92,9 +92,9 @@ def fullDetermination(input):
     # draw main gripping point
     cv.circle(img, R, 10, (255, 255, 0), 10)
 
-    ignore, buffer = cv.imencode('.png', img)
+    # ignore, buffer = cv.imencode('.png', img)
 
-    output = base64.b64encode(buffer)
+    # output = base64.b64encode(buffer)
 
     return output
 
