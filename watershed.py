@@ -8,17 +8,32 @@ import base64
 import sys
 
 
-# def data_uri_to_cv2_img(uri):
-    
-#     return img
+def data_uri_to_cv2_img(uri):
+    encoded_data = uri.split(',')[1]
+    nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
+    img = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    return img
 
+def line(p1, p2):
+    A = (p1[1] - p2[1])
+    B = (p2[0] - p1[0])
+    C = (p1[0]*p2[1] - p2[0]*p1[1])
+    return A, B, -C
+
+def intersection(L1, L2):
+    D = L1[0] * L2[1] - L1[1] * L2[0]
+    Dx = L1[2] * L2[1] - L1[1] * L2[2]
+    Dy = L1[0] * L2[2] - L1[2] * L2[0]
+    if D != 0:
+        x = Dx // D
+        y = Dy // D
+        return x, y
+    else:
+        return False
 
 def fullDetermination(input):
-    # encoded_data = input.split(',')[1]
-    # nparr = np.fromstring(base64.b64decode(encoded_data), np.uint8)
-    # img = cv.imdecode(nparr, cv.IMREAD_COLOR)
-    #img = data_uri_to_cv2_img(input)
-    img = cv.cvtColor(input, cv.COLOR_RGB2BGR)
+    img = data_uri_to_cv2_img(input)
+    #img = cv.cvtColor(input, cv.COLOR_RGB2BGR)
     # calculate otsu Threshold to get binary picture
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
     otsu = cv.THRESH_OTSU+cv.THRESH_BINARY_INV
@@ -65,39 +80,17 @@ def fullDetermination(input):
     for c in coor:
         cv.circle(img, (c[0], c[1]), 5, (255, 105, 180), 5)
     # calculate intersection
-
-    def line(p1, p2):
-        A = (p1[1] - p2[1])
-        B = (p2[0] - p1[0])
-        C = (p1[0]*p2[1] - p2[0]*p1[1])
-        return A, B, -C
-
-    def intersection(L1, L2):
-        D = L1[0] * L2[1] - L1[1] * L2[0]
-        Dx = L1[2] * L2[1] - L1[1] * L2[2]
-        Dy = L1[0] * L2[2] - L1[2] * L2[0]
-        if D != 0:
-            x = Dx // D
-            y = Dy // D
-            return x, y
-        else:
-            return False
-
     L1 = line((coor[1]), coor[3])
     L2 = line(coor[0], coor[2])
-
     R = intersection(L1, L2)
+    # if there's no intersection simply choose one of the points
     if R == False:
         R = coor[0]
     # draw main gripping point
     cv.circle(img, R, 10, (255, 255, 0), 10)
-
-    # ignore, buffer = cv.imencode('.png', img)
-
-    # output = base64.b64encode(buffer)
+    # encode back
+    ignore, buffer = cv.imencode('.png', img)
+    output = base64.b64encode(buffer)
 
     return output
 
-# for test purposes
-# image = cv.imread('static/img/Kartoffel.jpg')
-# image = fullDetermination(image)
