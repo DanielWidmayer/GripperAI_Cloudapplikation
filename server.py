@@ -49,15 +49,6 @@ def application():
 def websocket_test():
     return render_template("websocket.html")
 
-# @socketio.on('my event', namespace='/websocket')
-# def handle_event(json):
-#     print('received json: ', + str(json))
-
-@socketio.on('message')
-def handle_message(message):
-    app.logger.info('message flask called')
-    send(message)
-
 @socketio.on('json')
 def handle_json(json):
     app.logger.info('json flask called')
@@ -66,18 +57,11 @@ def handle_json(json):
 @socketio.on('my event')
 def handle_my_custom_event(json):
     app.logger.info('my event flask called')
-    app.logger.info(json)
-    app.logger.info(type(json))
-    json = watershed.fullDetermination(json)
-    emit('my response', json)
-
-# @socketio.on('my broadcast event', namespace='/test')
-# def test_message(message):
-#     emit('my response', {'data': message['data']}, broadcast=True)
-
-# @socketio.on('connect', namespace='/test')
-# def test_connect():
-#     emit('my response', {'data': 'Connected'})
+    #app.logger.info('Data: \n\n',json, '\n\nBuffer: ', json['data'],' Type: ',type(json['data']))
+    #app.logger.info(type(json['data']))
+    response = watershed.fullDetermination(json['data'])
+    #app.logger.info(type(response))
+    emit('my response', response.decode("utf-8"))
 
 # @socketio.on('disconnect', namespace='/test')
 # def test_disconnect():

@@ -3,33 +3,38 @@
   <head>
     <title>Flask_Chat_App</title>
     <link rel="icon" href="../static/img/favicon.ico" type="image/x-icon">
+    <style>
+  </style>
   </head>
   <body>
-    <img src="../static/img/Kartoffel.jpg" id="imgId">
-    <canvas id="imgCanvas"></canvas>
+    <img src="../static/img/Kartoffel.jpg" id="imgId" width="250" height="300">
+    <canvas id="imgCanvas" width="250" height="300"></canvas>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
     <script type="text/javascript" charset="utf-8">
     var canvas = document.getElementById('imgCanvas');
     var canvasContext = canvas.getContext('2d');
     var img = document.getElementById('imgId');
-    var height = canvas.height;
-    var width = canvas.width;
-    canvasContext.drawImage(img,width,height);
-    var buf = canvasContext.getImageData(0, 0, width, height);
-    console.log(typeof(buf));
+    var height = img.height;
+    var width = img.width;
+    canvasContext.drawImage(img,0,0,width,height);
+
+      img.src = canvas.toDataURL();
+      console.log(img.src);
     var socket = io();
     socket.on('connect', function() {
-      console.log(buf);
-      socket.emit('my event',  buf);
+      socket.emit('my event',  {data: img.src});
       console.log('I\'m connected');
     });
-    socket.on('message', function(received){
-      socket.emit('message', {data: 'Test!'});
-      console.log(received,'message client');
-    }); 
     socket.on('my response', function(received){
-      socket.emit('my event', {'image_data': buf});
-      console.log(received,'endless?');
+      received = 'data:image/png;base64,' + received;
+      socket.emit('my event', {data: img.src});
+
+      var image = new Image();
+      image.onload = function () {
+        canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+      };
+      image.src = received;
+      console.log('Image received');
     });
 </script>
 
