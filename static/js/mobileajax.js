@@ -228,7 +228,7 @@ function takeSnapshot() {
     var img = document.createElement('img');
     img.src = canvasImage.toDataURL();
     console.log('wurde ausgeführt');
-    $.post('/grippingpoints/callWatershed', { image: img.src }, function (result) {
+    $.post('/attempts/firstAjax/callWatershed', { image: img.src }, function (result) {
 
         console.log('wurde ausgeführt');
         result = 'data:image/png;base64,' + result;

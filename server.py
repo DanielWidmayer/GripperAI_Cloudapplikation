@@ -14,38 +14,43 @@ def home():
     return render_template("home.html")
 
 ### DIASHOW OF GRIPPING TYPES ###
-@app.route("/gripper")
-def gripper():
-    return render_template("gripper.html")
+@app.route("/grippingtypes")
+def grippingtypes():
+    return render_template("grippingtypes.html")
+
+### ALL ATTEMPTS COLLECTION FOR DOCUMENTATIONAL REASONS ###
+@app.route("/attempts")
+def attempts():
+    return render_template("attempts.html")
 
 #### FIRST ATTEMPT w/ AJAX ###
-@app.route("/grippingpoints")
-def grippingpoints():
-    return render_template("grippingpoints.html")
+@app.route("/attempts/firstAjax")
+def firstAjax():
+    return render_template("firstAjax.html")
 
-@app.route("/grippingpoints/callWatershed", methods=["POST"])
+@app.route("/attempts/firstAjax/callWatershed", methods=["POST"])
 def callFunc():
     image = request.form['image']
     result = watershed.fullDetermination(image)
     return result
 
 ### Presentation Case ###
-@app.route("/ajaxmobile")
+@app.route("/attempts/ajaxmobile")
 def ajaxmobile():
     return render_template("ajaxmobile.html")
 
 ### SECOND TRY - LIVE BUT JS TOO SLOW ###
-@app.route("/about")
-def about():
+@app.route("/attempts/livejs")
+def livejs():
     return render_template("opencvjstest.html")
 
 ### THIRD TRY - WEBCAMERATEMPLATE ###
-@app.route("/application")
-def application():
-    return render_template("index.htm")
+@app.route("/attempts/webcamerajs")
+def webcamerajs():
+    return render_template("webcamjscontours.html")
 
 ### WEBSOCKET BLOCK ###
-@app.route("/websocket")
+@app.route("/attempts/websocket")
 def websocket_test():
     return render_template("websocket.html")
 

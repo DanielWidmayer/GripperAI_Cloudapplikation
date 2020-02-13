@@ -77,25 +77,25 @@ function openCvReady() {
                 surefg.convertTo(surefg, cv.CV_8U, 1, 0);
                 cv.subtract(surebg, surefg, unknown);
                 cv.connectedComponents(surefg, markers);
-                // for (let i = 0; i < markers.rows; i++) {
-                //     for (let j = 0; j < markers.cols; j++) {
-                //         markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
-                //         if (unknown.ucharPtr(i, j)[0] == 255) {
-                //             markers.intPtr(i, j)[0] = 0;
-                //         }
-                //     }
-                // }
-                // cv.cvtColor(src, src, cv.COLOR_RGBA2RGB, 0);
-                // cv.watershed(src, markers);
-                // for (let i = 1; i < markers.rows - 1; i++) {
-                //     for (let j = 1; j < markers.cols - 1; j++) {
-                //         if (markers.intPtr(i, j)[0] == -1) {
-                //             src.ucharPtr(i, j)[0] = 255; // R
-                //             src.ucharPtr(i, j)[1] = 0; // G
-                //             src.ucharPtr(i, j)[2] = 0; // B
-                //         }
-                //     }
-                // }
+                for (let i = 0; i < markers.rows; i++) {
+                    for (let j = 0; j < markers.cols; j++) {
+                        markers.intPtr(i, j)[0] = markers.ucharPtr(i, j)[0] + 1;
+                        if (unknown.ucharPtr(i, j)[0] == 255) {
+                            markers.intPtr(i, j)[0] = 0;
+                        }
+                    }
+                }
+                cv.cvtColor(src, src, cv.COLOR_RGBA2RGB, 0);
+                cv.watershed(src, markers);
+                for (let i = 1; i < markers.rows - 1; i++) {
+                    for (let j = 1; j < markers.cols - 1; j++) {
+                        if (markers.intPtr(i, j)[0] == -1) {
+                            src.ucharPtr(i, j)[0] = 255; // R
+                            src.ucharPtr(i, j)[1] = 0; // G
+                            src.ucharPtr(i, j)[2] = 0; // B
+                        }
+                    }
+                }
                 if (video.srcObject != null) {
                     cv.imshow('canvasDisplay', surefg);
                     cv.imshow('canvasStep', surebg);
