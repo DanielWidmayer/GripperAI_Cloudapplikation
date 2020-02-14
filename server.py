@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, render_template_string, jsoni
 import watershed
 from flask_socketio import SocketIO, send, emit
 import logging
+# activation of eventlet, which is used for websocket support
+from eventlet import wsgi#, websocket
+import eventlet
+eventlet.monkey_patch()
 #from flask_talisman import Talisman
 
 app = Flask(__name__, template_folder="templates")
@@ -17,6 +21,11 @@ def home():
 @app.route("/grippingtypes")
 def grippingtypes():
     return render_template("grippingtypes.html")
+
+### TRYOUT - final ###
+@app.route("/tryout")
+def tryout():
+    return render_template("tryout.html")
 
 ### ALL ATTEMPTS COLLECTION FOR DOCUMENTATIONAL REASONS ###
 @app.route("/attempts")
@@ -61,11 +70,11 @@ def handle_json(json):
 
 @socketio.on('my event')
 def handle_my_custom_event(json):
-    app.logger.info('my event flask called')
+    #app.logger.info('my event flask called')
     #app.logger.info('Data: \n\n',json, '\n\nBuffer: ', json['data'],' Type: ',type(json['data']))
-    #app.logger.info(type(json['data']))
+    app.logger.info('watershed started')
     response = watershed.fullDetermination(json['data'])
-    #app.logger.info(type(response))
+    app.logger.info('watershed finished')
     emit('my response', response.decode("utf-8"))
 
 # @socketio.on('disconnect', namespace='/test')
@@ -74,4 +83,5 @@ def handle_my_custom_event(json):
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug = True, host = "localhost", port = 5000)
+    wsgi.server(eventlet.listen(('', 8000)), app)
+    #socketio.run(app, debug = True, host = "localhost", port = 5000)
