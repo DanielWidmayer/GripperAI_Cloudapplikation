@@ -18,7 +18,7 @@ def home():
     return render_template("home.html")
 
 ### DIASHOW OF GRIPPING TYPES ###
-@app.route("/grippingtypes")
+@app.route("/gripper")
 def grippingtypes():
     return render_template("grippingtypes.html")
 
@@ -83,5 +83,6 @@ def handle_my_custom_event(json):
 
 
 if __name__ == "__main__":
-    wsgi.server(eventlet.listen(('', 8000)), app)
+    socketio.run(app)
+    #wsgi.server(eventlet.listen(('', 8000)), app)
     #socketio.run(app, debug = True, host = "localhost", port = 5000)
