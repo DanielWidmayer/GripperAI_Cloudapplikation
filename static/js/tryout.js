@@ -9,9 +9,13 @@ var switchCameraButton;
 var closeCanvasButton;
 var amountOfCameras = 0;
 var currentFacingMode = 'environment';
+var keepGoing = false;
 // get canvas from DOM
 var canvasImage = document.getElementById('canvasImage');
+var canvasImageCopy = document.getElementById('canvasImageCopy');
 var canvasImageContext = canvasImage.getContext('2d');
+var canvasImageCopyContext = canvasImageCopy.getContext('2d');
+
 var start = performance.now();
 // Websocket Client side
 socket.on('connect', function() {
@@ -22,7 +26,7 @@ socket.on('disconnect', function(){
 });
 socket.on('my response', function(received){
     var time = performance.now();
-    console.log('Receive: ' + (time - start) + ' ms.');
+    console.log('Receive - Emit: ' + (time-start) + ' ms.');
     received = 'data:image/png;base64,' + received;
     var image = new Image();
     image.onload = function () {
@@ -31,7 +35,9 @@ socket.on('my response', function(received){
     image.src = received;
     var time11 = performance.now();
     console.log('Image received:' + (time11 - time));
-    takeSnapshot();
+    if(keepGoing == true){
+        takeSnapshot();
+    }
     var time1 = performance.now();
     console.log('Dauer Processing1: ' + (time1 - time11) + ' ms.');
 });
@@ -92,6 +98,7 @@ function initCameraUI() {
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role
 
     takePhotoButton.addEventListener('click', function() {
+        keepGoing = true;
         takeSnapshotUI();
         takeSnapshot();
     });
@@ -222,6 +229,7 @@ function initCameraStream() {
 }
 
 function takeSnapshot() {
+    keepGoing = true;
     width = video.videoWidth;
     height = video.videoHeight;
    
@@ -245,6 +253,7 @@ function takeSnapshot() {
     closeCanvasButton.addEventListener('click', function() {
         canvasImageContext.clearRect(0, 0, canvasImage.width, canvasImage.height);
         closeCanvasButton.style.display = 'none';
+        keepGoing = false;
     });
 }
 

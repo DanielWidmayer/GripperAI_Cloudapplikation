@@ -77,11 +77,11 @@ def handle_my_custom_event(json):
     app.logger.info('watershed finished')
     emit('my response', response.decode("utf-8"))
 
-# @socketio.on('disconnect', namespace='/test')
-# def test_disconnect():
-#     print('Client disconnected')
+@socketio.on('disconnect')
+def test_disconnect():
+    print('Client disconnected')
 
 
 if __name__ == "__main__":
-    wsgi.server(eventlet.listen(('', 8000)), app)
-    #socketio.run(app, debug = True, host = "localhost", port = 5000)
+    #wsgi.server(eventlet.listen(('', 8000)), app)
+    socketio.run(app, debug = True, host = "localhost", port = 5000)
