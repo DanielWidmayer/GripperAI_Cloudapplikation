@@ -2,9 +2,8 @@
 venv/
 /emsdk
 watershed.pyc
-/old_stuff
-image.png
 .vscode/
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*

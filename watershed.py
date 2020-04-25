@@ -49,7 +49,7 @@ def fullDetermination(input):
     # Finding sure foreground area
     dist_transform = cv.distanceTransform(closing, cv.DIST_L2, 5)
     ret, sure_fg = cv.threshold(
-        dist_transform, 0.3*dist_transform.max(), 255, 0)
+        dist_transform, 0.3 * dist_transform.max(), 255, 0)
     # Finding unknown region
     sure_fg = np.uint8(sure_fg)
     unknown = cv.subtract(sure_bg, sure_fg)

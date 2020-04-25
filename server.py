@@ -72,9 +72,9 @@ def handle_json(json):
 def handle_my_custom_event(json):
     #app.logger.info('my event flask called')
     #app.logger.info('Data: \n\n',json, '\n\nBuffer: ', json['data'],' Type: ',type(json['data']))
-    app.logger.info('watershed started')
+    #app.logger.info('watershed started')
     response = watershed.fullDetermination(json['data'])
-    app.logger.info('watershed finished')
+    #app.logger.info('watershed finished')
     emit('my response', response.decode("utf-8"))
 
 @socketio.on('disconnect')
